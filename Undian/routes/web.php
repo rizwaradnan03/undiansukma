@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\HadiahController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\PeriodeController;
+use App\Http\Controllers\SetupController;
 use App\Models\Hadiah;
 use App\Models\Sistem;
 use Illuminate\Support\Facades\DB;
@@ -69,9 +71,13 @@ Route::get('/hadiah', [HadiahController::class, 'halaman_hadiah']);
 Route::get('/pemenang', [HadiahController::class, 'halaman_pemenang']);
 
 Route::controller(['Auth'])->group(function () {
+    Route::get('/listperiode', [PeriodeController::class, 'listperiode']);
+    Route::post('/updateperiode', [PeriodeController::class, 'updateperiode']);
     Route::resource('undian',HadiahController::class);
+    Route::resource('setup',SetupController::class);
+    Route::resource('periode',PeriodeController::class);
     Route::get('/getHadiah',[HadiahController::class, 'getHadiah']);
-    Route::get('/postPemenang',[HadiahController::class, 'postPemenang']);
+    Route::post('/postPemenang',[HadiahController::class, 'postPemenang']);
     Route::get('/getPemenang',[HadiahController::class, 'getPemenang']);
     Route::get('/getLogout',[HadiahController::class, 'getLogout']);
 })->middleware('Auth');

@@ -21,10 +21,10 @@ class HadiahController extends Controller
             $title = "Undian";
             $periode = Sistem::where('status','=','0')->first();
             // $data = Setup::all()->where(['status','=','0']);
-            $data = DB::table('setups')->selectRaw('setups.id,setups.nama,setups.periode_id,setups.status')
+            $data = DB::table('setups')->selectRaw('setups.id,setups.nama,setups.periode_id,setups.status,setups.jumlah')
             ->join('sistems', 'sistems.id','=','setups.periode_id')
-            ->where('setups.status','=','0')
             ->where('sistems.status','=',$periode->status)
+            ->where('setups.jumlah','>','0')
             ->get();
             return view('undian',compact('data','title','periode'));
         }else{
@@ -35,7 +35,7 @@ class HadiahController extends Controller
     public function halaman_hadiah(){
         $title = "Setup Hadiah";
         $data_judul = Sistem::where('status','=','0')->first();
-        $data = DB::table('setups')->selectRaw('nama,count(nama) as total')
+        $data = DB::table('setups')->selectRaw('setups.id,setups.nama,setups.jumlah_display')
         ->leftJoin('sistems','sistems.id','=','setups.periode_id')
         ->where('setups.periode_id','=',$data_judul->id)
         ->groupBy('nama')->get();
@@ -46,7 +46,7 @@ class HadiahController extends Controller
     public function halaman_pemenang(){
         $title = "Pemenang";
         $data_judul = Sistem::where('status','=','0')->first();
-        $data = DB::table('setups')->selectRaw('setups.nama, count(setups.nama) as total, undians.nama_lengkap, undians.noacc, sistems.nama_periode')
+        $data = DB::table('setups')->selectRaw('setups.nama, undians.nama_lengkap, undians.noacc, sistems.nama_periode')
         ->leftJoin('hadiahs', 'hadiahs.hadiah_id', '=' ,'setups.id')
         ->leftJoin('undians', 'undians.id', '=', 'hadiahs.no_undian_id')
         ->leftJoin('sistems', 'sistems.id','=','hadiahs.periode_id')
@@ -69,9 +69,11 @@ class HadiahController extends Controller
             $data_save->periode_id = $periode_id;
             $data_save->save();
 
-            Undian::where('id', $no_undian_id)->update(
-                ['status' => '1', 'point' => '0'],
-            );
+            // Undian::where('id', $no_undian_id)->update(
+            //     ['status' => '1', 'point' => '0'],
+            // );
+
+            Setup::where('id',$hadiah_id)->update(['jumlah' => DB::raw('jumlah - 1')]);
 
             Setup::where('id', $hadiah_id)->update(
                 ['status' => '1']
@@ -127,7 +129,15 @@ class HadiahController extends Controller
      */
     public function show(string $id)
     {
-        //
+        if(Auth::check()){
+            $data = Setup::where('id','=',$id)->first();
+            $title = "Data Hadiah " . $data->nama;
+            $data_select = Sistem::all();
+
+            return view('edit',compact('data','title','data_select'));
+        }else{
+            return back()->with('haruslogin', 'Anda harus Login!');
+        }
     }
 
     /**
@@ -135,7 +145,7 @@ class HadiahController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        
     }
 
     /**
@@ -143,7 +153,13 @@ class HadiahController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $save_data = Setup::find($id);
+        $save_data->nama = $request->nama;
+        $save_data->periode_id = $request->periode_id;
+        $save_data->jumlah = $request->jumlah;
+        $save_data->jumlah_display = $request->jumlah;
+        $save_data->save();
+        return redirect('/hadiah')->with('berhasil_update','Data Berhasil Diubah!');
     }
 
     /**

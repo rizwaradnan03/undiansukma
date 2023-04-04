@@ -17,7 +17,7 @@
       <select name="hadiah_id" id="select2" class="form-control">
         <option value="0" selected>Pilih Hadiah</option>
         @foreach ($data as $d)
-          <option value="{{$d->id}}">{{$d->nama}}</option>
+          <option value="{{$d->id}}">{{$d->nama}} ({{$d->jumlah}})</option>
         @endforeach
       </select>
       <div class="group">
@@ -37,6 +37,7 @@
       <button class="lever button" id="cari_pemenang">
         MULAI
       </button>
+      <input type="hidden" name="_token" id="token" value="{{ csrf_token() }}">
       <input type="hidden" name="no_undian_id" id="no_undian_id">
       <input type="hidden" name="hadiah_id" id="hadiah_id">
       <input type="hidden" name="periode_id" id="periode_id" value="{{$periode['id']}}">
@@ -96,8 +97,8 @@ $('#select2').on("change", function(){
       }).done(function(response){
         var data = JSON.parse(response);
         $('#no_undian_id').val(data.data.id);
-
-        var tMax = 10000, // animation time, ms
+        console.log(data)
+        var tMax = 2000, // animation time, ms
         height = 700,
         speeds = [],
         r = [],
@@ -213,8 +214,8 @@ $('#select2').on("change", function(){
 
     $.ajax({
       url: "{{url('/postPemenang')}}",
-      data: {no_undian_id:no_undian_id, hadiah_id:hadiah_id, periode_id:periode_id},
-      type: "GET",
+      data: {no_undian_id:no_undian_id, hadiah_id:hadiah_id, periode_id:periode_id, "_token":$('#token').val()},
+      type: "POST",
     }).done(function(response){
       var data = JSON.parse(response);
       Swal.fire({

@@ -21,11 +21,11 @@
   <nav class="navbar navbar-expand-lg bg-light">
     <div class="container-fluid">
       <a class="navbar-brand text-dark ml-2" href="{{url('/')}}"><img src="{{asset('img/sukma_navbar.png')}}"></a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav">
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
             <a class="nav-link text-dark" href="{{url('/')}}">Beranda</a>
           </li>
@@ -35,25 +35,50 @@
           <li class="nav-item">
             <a class="nav-link text-dark" href="{{url('/pemenang')}}">Pemenang Undian</a>
           </li>
+          @if (Auth::user())
+              
+          @else
           <li class="nav-item">
             <a class="nav-link text-dark" href="{{url('/lokasi')}}">Lokasi Kami</a>
           </li>
+          @endif
           @if (Auth::user())
           <li class="nav-item">
-            <a class="nav-link text-dark" href="{{url('/undian')}}">Undi</a>
+            <a class="nav-link text-danger fw-bold" href="{{url('/listperiode')}}">List Periode</a>
           </li>
           @endif
+          @if (Auth::user())
           <li class="nav-item">
+            <a class="nav-link text-danger fw-bold" href="{{url('/undian')}}">Undi</a>
+          </li>
+          @endif
+          @if (Auth::user())
+          <li class="nav-item">
+            <a class="nav-link text-danger fw-bold" href="{{url('/periode')}}">Setup Periode</a>
+          </li>
+          @endif
+          @if (Auth::user())
+          <li class="nav-item">
+            <a class="nav-link text-danger fw-bold" href="{{url('/setup')}}">Setup Hadiah</a>
+          </li>
+          @endif
+        </ul>
+          <li class="nav-item d-flex">
             @if (Auth::user())
-            <a class="nav-link text-dark" href="{{url('/getLogout')}}">Logout</a>
+            <a class="btn btn-danger" href="{{url('/getLogout')}}">Logout</a>
             @else
-            <a class="nav-link text-dark" href="{{url('/login')}}" data-bs-toggle="modal" data-bs-target="#exampleModal">Login</a>
+            <a class="btn btn-primary" href="{{url('/login')}}" data-bs-toggle="modal" data-bs-target="#exampleModal">Login</a>
             @endif
           </li>
-        </ul>
       </div>
     </div>
   </nav>
+  @if ($berhasil_update = Session::get('berhasil_update'))
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+      <strong>{{$berhasil_update}}</strong>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  @endif
     @if ($gagal = Session::get('gagal'))
     <div class="alert alert-danger alert-dismissible fade show" role="alert">
       <strong>{{$gagal}}</strong>

@@ -11,7 +11,9 @@ class Setup extends Model
     protected $fillable = [
         'nama',
         'periode_id',
-        'status'
+        'status',
+        'jumlah_display',
+        'jumlah',
     ];
     use HasFactory;
 }

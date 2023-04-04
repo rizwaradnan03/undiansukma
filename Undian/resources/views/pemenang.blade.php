@@ -36,7 +36,6 @@
       <tr>
         <th scope="col">No</th>
         <th scope="col">Hadiah</th>
-        <th scope="col">Total</th>
         <th scope="col">Nama Pemenang</th>
         <th scope="col">Periode</th>
       </tr>
@@ -47,7 +46,6 @@
         <tr>
             <th scope="row">{{++$no;}}</th>
             <td>{{$d->nama}}</td>
-            <td>{{$d->total}} Unit</td>
             <td>@if ($d->nama_lengkap == null)
                 {{"Belum Ada Pemenang"}}
             @else
