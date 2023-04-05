@@ -22,7 +22,7 @@ return new class extends Migration
         DB::table('sistems')->insert(
             array(
                 [
-                    'nama_periode' => 'PERIODE 02 JUNI 2022 - 31 MEI 2023',
+                    'nama_periode' => '02 JUNI 2022 - 31 MEI 2023',
                     'tgl_expired' => '2023-05-31'
                 ],
             )

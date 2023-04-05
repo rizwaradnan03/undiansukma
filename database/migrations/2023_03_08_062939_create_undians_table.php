@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('no_undian');
             $table->string('nama_lengkap');
             $table->string('point');
+
             $table->string('status')->default('0');
             $table->timestamps();
         });

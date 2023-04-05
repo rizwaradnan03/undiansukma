@@ -24,16 +24,10 @@ Route::get('/', function () {
     $title = "Homepage";
     $data_periode = Sistem::where('status','=','0')->first();
 
-    // echo "<pre>";
-    // print_r($periode);die;
-    //tanggal
     $today = date_create(date("Y-m-d"));
     $to = date_create($data_periode['tgl_expired']);
     $date_diff =  date_diff($today,$to);
-    // echo "<pre>";
-    
-    // print_r($json);die;
-    // $merge = array_merge($json_response['periode'],$json_response['jumlah']);
+
     return view('home', compact('title','date_diff'));
 });
 
@@ -42,23 +36,23 @@ Route::get('/lokasi', function () {
     return view('lokasi', compact('title'));
 });
 
-Route::get('/getChart', function(){
-    $data = DB::table('sistems')->selectRaw('sistems.nama_periode, count(hadiahs.id) as jumlah')
-    ->join('hadiahs','hadiahs.periode_id','=','sistems.id')
-    ->groupBy('hadiahs.periode_id')->get();
+// Route::get('/getChart', function(){
+//     $data = DB::table('sistems')->selectRaw('sistems.nama_periode, count(hadiahs.id) as jumlah')
+//     ->join('hadiahs','hadiahs.periode_id','=','sistems.id')
+//     ->groupBy('hadiahs.periode_id')->get();
 
-    $periode = [];
-    $jumlah = [];
-    for($i = 0;$i < sizeof($data);$i++){
-        $periode[$i] = $data[$i]->nama_periode;
-        $jumlah[$i] = $data[$i]->jumlah;
-    }
+//     $periode = [];
+//     $jumlah = [];
+//     for($i = 0;$i < sizeof($data);$i++){
+//         $periode[$i] = $data[$i]->nama_periode;
+//         $jumlah[$i] = $data[$i]->jumlah;
+//     }
 
-    $json_response['periode'] = $periode;
-    $json_response['jumlah'] = $jumlah;
-    return json_encode($json_response);
+//     $json_response['periode'] = $periode;
+//     $json_response['jumlah'] = $jumlah;
+//     return json_encode($json_response);
 
-});
+// });
 
 // Route::get('/login', function(){
 //     $title = "Login";

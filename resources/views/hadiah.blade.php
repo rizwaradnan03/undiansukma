@@ -28,7 +28,7 @@
     </button>
   </div> --}}
   <br>
-  <h1 class="text-center">DATA HADIAH ({{$data_judul->nama_periode}})</h1>
+  <h1 class="text-center">DATA HADIAH (PERIODE {{$data_judul->nama_periode}})</h1>
   <hr>
   <table class="table" id="datatables">
     <thead class="thead-dark">

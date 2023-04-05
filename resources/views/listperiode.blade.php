@@ -2,7 +2,7 @@
 @section('content')
 <br>
 <br>
-<h1 class="text-center">LIST PERIODE</h1>
+<h1 class="text-center">DATA PERIODE</h1>
 <hr>
 <input type="hidden" name="_token" id="token" value="{{ csrf_token() }}">
 <div class="tabel">
@@ -38,8 +38,6 @@
 @endsection
 @section('js')
     <script>
-        
-        
         var to_html = "";
         var jsonData = {!! $jsonData !!};
         to_html += "<table class='table' id='datatables'>";
@@ -57,7 +55,7 @@
                         to_html += "<td>"+jsonData[i].nama_periode+"</td>";
                         to_html += "<td>"+jsonData[i].tgl_expired+"</td>";
                         if(jsonData[i].status == 0){
-                            to_html += "<td><button class='text-success border border-2 border-success rounded bg-light p-3'>Aktif</button></td>";
+                            to_html += "<td><button class='text-success border border-2 border-success rounded bg-light p-3' id='aktif'>Aktif</button></td>";
                         }else if(jsonData[i].status == 1){
                             to_html += "<td><button class='text-danger border border-2 border-danger rounded bg-light p-3' id='tidak_aktif"+jsonData[i].id+"' value="+jsonData[i].id+">Tidak Aktif</button></td>";      
                         }
@@ -68,9 +66,17 @@
 
         $('.tabel').html(to_html);
         $('#datatables').DataTable();
+
+        $('#aktif').on("click", function(){
+            Swal.fire({
+                title: 'Periode ini sudah aktif!',
+                confirmButtonText: 'Ok',
+                icon: 'success'
+            })
+        })
+
         $('#tidak_aktif1, #tidak_aktif2, #tidak_aktif3, #tidak_aktif4, #tidak_aktif5, #tidak_aktif6, #tidak_aktif7, #tidak_aktif8, #tidak_aktif9, #tidak_aktif10, #tidak_aktif11, #tidak_aktif12, #tidak_aktif13, #tidak_aktif14, #tidak_aktif15, #tidak_aktif16, #tidak_aktif17, #tidak_aktif18, #tidak_aktif19, #tidak_aktif20').on("click", function(){
             var id = $(this).val();
-            console.log(id)
             Swal.fire({
                 title: 'Ingin mengubah periode saat ini?',
                 showCancelButton: true,
@@ -82,7 +88,7 @@
 
                     $.ajax({
                         url: "{{url('/updateperiode')}}",
-                        data: {id: id, "_token":$('#token').val()},
+                        data: {id: id, "_token": $('#token').val()},
                         type: 'POST'
                     }).done(function(response){
                         var data = JSON.parse(response);

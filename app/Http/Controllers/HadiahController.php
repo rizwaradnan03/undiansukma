@@ -20,7 +20,7 @@ class HadiahController extends Controller
         if(Auth::check()){
             $title = "Undian";
             $periode = Sistem::where('status','=','0')->first();
-            // $data = Setup::all()->where(['status','=','0']);
+
             $data = DB::table('setups')->selectRaw('setups.id,setups.nama,setups.periode_id,setups.status,setups.jumlah')
             ->join('sistems', 'sistems.id','=','setups.periode_id')
             ->where('sistems.status','=',$periode->status)
@@ -39,7 +39,7 @@ class HadiahController extends Controller
         ->leftJoin('sistems','sistems.id','=','setups.periode_id')
         ->where('setups.periode_id','=',$data_judul->id)
         ->groupBy('nama')->get();
-        // dd($data);
+        
         return view('hadiah', compact('title','data','data_judul'));
     }
 
@@ -69,10 +69,6 @@ class HadiahController extends Controller
             $data_save->periode_id = $periode_id;
             $data_save->save();
 
-            // Undian::where('id', $no_undian_id)->update(
-            //     ['status' => '1', 'point' => '0'],
-            // );
-
             Setup::where('id',$hadiah_id)->update(['jumlah' => DB::raw('jumlah - 1')]);
 
             Setup::where('id', $hadiah_id)->update(
@@ -88,7 +84,7 @@ class HadiahController extends Controller
         if(Auth::check()){
             $cari_pemenang = Undian::where('status','=','0')->where('point', '=', '1')->inRandomOrder()->first();
             $tampil_pemenang = Undian::find($cari_pemenang['id']);
-            // dd($tampil_pemenang);
+            
             $response_data['data'] = $cari_pemenang;
             $response_data['pemenang'] = $tampil_pemenang;
             return json_encode($response_data);

@@ -44,7 +44,7 @@
           @endif
           @if (Auth::user())
           <li class="nav-item">
-            <a class="nav-link text-danger fw-bold" href="{{url('/listperiode')}}">List Periode</a>
+            <a class="nav-link text-danger fw-bold" href="{{url('/listperiode')}}">Periode</a>
           </li>
           @endif
           @if (Auth::user())
