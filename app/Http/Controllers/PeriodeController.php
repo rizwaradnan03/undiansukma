@@ -72,10 +72,14 @@ class PeriodeController extends Controller
      */
     public function show(string $id)
     {
-        $data = Sistem::where('id','=',$id)->first();
-        $title = "Edit Periode" . $data->nama_periode;
+        if(Auth::check()){
+            $data = Sistem::where('id','=',$id)->first();
+            $title = "Edit Periode" . $data->nama_periode;
 
-        return view('edit_periode', compact('data','title'));
+            return view('edit_periode', compact('data','title'));
+        }else{
+            return back()->with('haruslogin', 'Anda harus Login!');
+        }
     }
 
     /**
