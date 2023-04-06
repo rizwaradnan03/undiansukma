@@ -26,7 +26,7 @@ class PeriodeController extends Controller
         if(Auth::check()){
             $title = "List Periode";
             $data = Sistem::all();
-            return view('listperiode',compact('title'))->with('jsonData', json_encode($data));
+            return view('listperiode',compact('title','data'));
         }else{
             return back()->with('haruslogin', 'Anda harus Login!');
         }
@@ -72,7 +72,10 @@ class PeriodeController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $data = Sistem::where('id','=',$id)->first();
+        $title = "Edit Periode" . $data->nama_periode;
+
+        return view('edit_periode', compact('data','title'));
     }
 
     /**
@@ -88,7 +91,11 @@ class PeriodeController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $save_data = Sistem::find($id);
+        $save_data->nama_periode = $request->nama_periode;
+        $save_data->tgl_expired = $request->tgl_expired;
+        $save_data->save();
+        return redirect('/listperiode')->with('berhasil_update','Data Berhasil Diubah!');
     }
 
     /**

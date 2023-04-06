@@ -8,63 +8,38 @@
 <div class="tabel">
 
 </div>
-{{-- <table class="table" id="datatables">
-    <thead class="thead-dark">
-      <tr>
-        <th scope="col">No</th>
-        <th scope="col">Nama Periode</th>
-        <th scope="col">Tanggal Pelaksanaan</th>
-        <th scope="col">Status</th>
-      </tr>
-    </thead>
-    <tbody>
-        <?php $no = 0; ?>
-        @foreach ($data as $d)
-        <tr>
-            <th scope="row">{{++$no;}}</th>
-            <td>{{$d->nama_periode}}</td>
-            <td>{{$d->tgl_expired}}</td>
-            <td class="text-center">
+  <table class='table' id='datatables'>
+        <thead class='thead-dark'>
+          <th scope='col'>No</th>
+          <th scope='col'>Nama Periode</th>
+          <th scope='col'>Tanggal Pelaksanaan</th>
+          <th scope='col'>Status</th>
+          <th scope='col'>Aksi</th>
+        </thead>
+        <tbody>
+            <?php $no = 0; ?>
+            @foreach ($data as $d)
+            <tr>
+                <td>{{++$no}}</td>
+                <td>{{$d->nama_periode}}</td>
+                <td>{{$d->tgl_expired}}</td>
                 @if ($d->status == 0)
-                    <button class="text-success border border-2 border-success rounded bg-light p-3">Aktif</button>
-                @else
-                    <a href="{{url('/updateperiode/'.$d->id)}}" class="text-danger border border-2 border-danger rounded bg-light p-2 text-decoration-none" id="tidak_aktif"> Tidak Aktif</a>
-                @endif
-            </td>
-          </tr>
-        @endforeach
-    </tbody>
-  </table> --}}
+                    <td><button class='text-success border border-2 border-success rounded bg-light p-3' id='aktif'>Aktif</button></td>
+                @elseif ($d->status == 1)
+                    <td><button class='text-danger border border-2 border-danger rounded bg-light p-3' id='tidak_aktif{{$d->id}}' value="{{$d->id}}">Tidak Aktif</button></td>
+                @endif              
+                <td><a href='{{url('/periode/'.$d->id)}}' class='btn btn-warning'><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                    <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                    <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                  </svg> Edit</a></td>
+            </tr>
+            @endforeach
+      </tbody>
+  </table>
+
 @endsection
 @section('js')
     <script>
-        var to_html = "";
-        var jsonData = {!! $jsonData !!};
-        to_html += "<table class='table' id='datatables'>";
-            to_html += "<thead class='thead-dark'>";
-                to_html += "<th scope='col'>No</th>";
-                to_html += "<th scope='col'>Nama Periode</th>";
-                to_html += "<th scope='col'>Tanggal Pelaksanaan</th>";
-                to_html += "<th scope='col'>Status</th>";
-            to_html +=  "</thead>";
-            to_html += "<tbody>";
-                var no = 0;
-                for(var i = 0;i < jsonData.length;i++){
-                    to_html += "<tr>";
-                        to_html += "<td>"+ (++no) +"</td>";
-                        to_html += "<td>"+jsonData[i].nama_periode+"</td>";
-                        to_html += "<td>"+jsonData[i].tgl_expired+"</td>";
-                        if(jsonData[i].status == 0){
-                            to_html += "<td><button class='text-success border border-2 border-success rounded bg-light p-3' id='aktif'>Aktif</button></td>";
-                        }else if(jsonData[i].status == 1){
-                            to_html += "<td><button class='text-danger border border-2 border-danger rounded bg-light p-3' id='tidak_aktif"+jsonData[i].id+"' value="+jsonData[i].id+">Tidak Aktif</button></td>";      
-                        }
-                    to_html += "</tr>";
-                }
-            to_html += "</tbody>";
-        to_html += "</table>";
-
-        $('.tabel').html(to_html);
         $('#datatables').DataTable();
 
         $('#aktif').on("click", function(){

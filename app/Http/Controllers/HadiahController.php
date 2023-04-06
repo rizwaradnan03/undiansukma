@@ -127,10 +127,10 @@ class HadiahController extends Controller
     {
         if(Auth::check()){
             $data = Setup::where('id','=',$id)->first();
-            $title = "Data Hadiah " . $data->nama;
+            $title = "Edit Hadiah " . $data->nama;
             $data_select = Sistem::all();
 
-            return view('edit',compact('data','title','data_select'));
+            return view('edit_hadiah',compact('data','title','data_select'));
         }else{
             return back()->with('haruslogin', 'Anda harus Login!');
         }

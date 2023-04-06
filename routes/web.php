@@ -36,29 +36,6 @@ Route::get('/lokasi', function () {
     return view('lokasi', compact('title'));
 });
 
-// Route::get('/getChart', function(){
-//     $data = DB::table('sistems')->selectRaw('sistems.nama_periode, count(hadiahs.id) as jumlah')
-//     ->join('hadiahs','hadiahs.periode_id','=','sistems.id')
-//     ->groupBy('hadiahs.periode_id')->get();
-
-//     $periode = [];
-//     $jumlah = [];
-//     for($i = 0;$i < sizeof($data);$i++){
-//         $periode[$i] = $data[$i]->nama_periode;
-//         $jumlah[$i] = $data[$i]->jumlah;
-//     }
-
-//     $json_response['periode'] = $periode;
-//     $json_response['jumlah'] = $jumlah;
-//     return json_encode($json_response);
-
-// });
-
-// Route::get('/login', function(){
-//     $title = "Login";
-//     return view('login', compact('title'));
-// });
-
 Route::post('/postLogin',[LoginController::class, 'login']);
 
 Route::get('/hadiah', [HadiahController::class, 'halaman_hadiah']);

@@ -74,20 +74,19 @@ $('#select2').on("change", function(){
       confirmButtonText: 'Ok',
     }).then((result) => {
       if (result.isConfirmed) {
-    // Melakukan reload halaman
-      location.reload();
+          location.reload();
       }else{
-        location.reload();
+          location.reload();
       }
     });
   }else{
     $.ajax({
-    url: "{{url('/getHadiah')}}",
-    data: {hadiah_id:hadiah_id},
-    type: 'GET'
-  }).done(function(response){
-    var data = JSON.parse(response);
-    $('#hadiah_id').val(data.hadiah_id);
+      url: "{{url('/getHadiah')}}",
+      data: {hadiah_id:hadiah_id},
+      type: 'GET'
+    }).done(function(response){
+      var data = JSON.parse(response);
+      $('#hadiah_id').val(data.hadiah_id);
 
     $('#cari_pemenang').on("click", function(){
       $('.img_center').hide();
@@ -97,8 +96,8 @@ $('#select2').on("change", function(){
       }).done(function(response){
         var data = JSON.parse(response);
         $('#no_undian_id').val(data.data.id);
-        console.log(data)
-        var tMax = 2000, // animation time, ms
+
+        var tMax = 2000,
         height = 700,
         speeds = [],
         r = [],
@@ -123,12 +122,9 @@ $('#select2').on("change", function(){
         $reels = $('.reel').each(function(i, el){
             el.innerHTML = '<div class="reel-holder"><p>' + reels[i].join('</p><p>') + '</p></div><div class="reel-holder"><p>' + reels[i].join('</p><p>') + '</p></div><div class="reel-door">?</div>'
         });
-
-        // Add user's meter reading to fake reel for comparison
         $('.fake-reel').each(function(i, el){
             el.innerHTML = sReading.charAt(i);
         });
-
         action();
     }
 
@@ -175,7 +171,6 @@ $('#select2').on("change", function(){
 
     function check(){
         var matchedNumbers = 0;
-
         for (var i = 0, len = sTarget.length; i < len; i += 1) {
             var targetReading = sReading.charAt(i) || 0,
                 targetInt = sTarget.charAt(i) || 0,
@@ -185,15 +180,6 @@ $('#select2').on("change", function(){
             targetReading == targetInt ? matchedNumbers ++ : null;
         }
 
-        // var announcement;
-
-        // if (matchedNumbers == 5) {
-        //     announcement = 'You matched all 5 numbers! you win!!!';
-        // } else if (matchedNumbers == 1) {
-        //     announcement = 'You matched 1 number. Better luck next time!';
-        // } else {
-        //     announcement = 'You matched ' + matchedNumbers + ' numbers. Better luck next time!';
-        // }
         $('#save').css("visibility","visible")
         $('#tolak').css("visibility","visible")
         $('#text_selamat').html("SELAMAT KEPADA");
@@ -219,18 +205,17 @@ $('#select2').on("change", function(){
     }).done(function(response){
       var data = JSON.parse(response);
       Swal.fire({
-      title: 'Selamat Telah Memenangkan!',
-      icon: 'success',
-      confirmButtonColor: '#3085d6',
-      confirmButtonText: 'Ok',
-    }).then((result) => {
-      if (result.isConfirmed) {
-    // Melakukan reload halaman
-      location.reload();
-      }else{
-        location.reload();
-      }
-    });
+        title: 'Selamat Telah Memenangkan!',
+        icon: 'success',
+        confirmButtonColor: '#3085d6',
+        confirmButtonText: 'Ok',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          location.reload();
+        }else{
+          location.reload();
+        }
+      });
     });
 
   });
@@ -242,8 +227,7 @@ $('#select2').on("change", function(){
       confirmButtonText: 'Ok',
     }).then((result) => {
       if (result.isConfirmed) {
-    // Melakukan reload 
-      location.reload();
+        location.reload();
       }else{
         location.reload();
       }

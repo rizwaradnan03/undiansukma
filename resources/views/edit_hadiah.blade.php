@@ -3,7 +3,7 @@
 <div class="col d-flex justify-content-center mt-5">
     <div class="card" style="width: 50%;">
         <div class="card-body">
-          <h2 class="card-title text-center">SETUP HADIAH {{$data->nama}}</h2>
+          <h2 class="card-title text-center">EDIT HADIAH {{$data->nama}}</h2>
           <hr>
         <form action="{{url('/undian/'.$data->id)}}" method="post" enctype="multipart/form-data">
             @csrf
