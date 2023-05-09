@@ -11,5 +11,6 @@ class Sistem extends Model
     protected $fillable = [
         'nama_periode','tgl_expired','status'
     ];
+    
     use HasFactory;
 }

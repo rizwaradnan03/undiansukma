@@ -39,7 +39,7 @@ class HadiahController extends Controller
         ->leftJoin('sistems','sistems.id','=','setups.periode_id')
         ->where('setups.periode_id','=',$data_judul->id)
         ->groupBy('nama')->get();
-        
+
         return view('hadiah', compact('title','data','data_judul'));
     }
 
@@ -73,7 +73,7 @@ class HadiahController extends Controller
 
             Setup::where('id', $hadiah_id)->update(
                 ['status' => '1']
-            );            
+            );
 
             $json_response['status'] = "Berhasil!";
             return json_encode($json_response);
@@ -82,9 +82,10 @@ class HadiahController extends Controller
 
     public function getPemenang(){
         if(Auth::check()){
-            $cari_pemenang = Undian::where('status','=','0')->where('point', '=', '1')->inRandomOrder()->first();
+            $periode = Sistem::where('status','=','0')->first();
+            $cari_pemenang = Undian::where('status','=','0')->where('point', '=', '1')->where('periode_id','=',$periode['id'])->inRandomOrder()->first();
             $tampil_pemenang = Undian::find($cari_pemenang['id']);
-            
+
             $response_data['data'] = $cari_pemenang;
             $response_data['pemenang'] = $tampil_pemenang;
             return json_encode($response_data);
@@ -94,7 +95,7 @@ class HadiahController extends Controller
     public function getHadiah(Request $request){
         if(Auth::check()){
             $hadiah_id = $request->input('hadiah_id');
-            
+
             $json_response['hadiah_id'] = $hadiah_id;
             return json_encode($json_response);
         }else{
@@ -141,7 +142,7 @@ class HadiahController extends Controller
      */
     public function edit(string $id)
     {
-        
+
     }
 
     /**

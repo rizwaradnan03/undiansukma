@@ -2,7 +2,6 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
@@ -19,10 +18,12 @@ return new class extends Migration
             $table->string('nama_lengkap');
             $table->string('point');
 
+            $table->unsignedBigInteger('periode_id')->default('1');
+            $table->foreign('periode_id')->references('id')->on('sistems')->onDelete('cascade');
+
             $table->string('status')->default('0');
             $table->timestamps();
         });
-
     }
 
     /**

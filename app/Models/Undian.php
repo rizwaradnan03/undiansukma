@@ -13,13 +13,12 @@ class Undian extends Model
         'no_undian',
         'nama_lengkap',
         'point',
+	    'periode_id',
         'status',
     ];
 
     public function hadiah(){
         return $this->hasMany(Hadiah::class);
     }
-
     use HasFactory;
 }
-?>
