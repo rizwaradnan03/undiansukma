@@ -10,7 +10,7 @@
 @section('content')
 <br><br><br>
 {{-- <button class="btn btn-warning" id="cari_pemenang">Mulai</button> --}}
-  
+
   <div class="machine">
     <div class="slot-machine">
       <h1>PENGUNDIAN</h1>
@@ -33,7 +33,7 @@
       <h1 id="text_noacc" class="text-left"></h1>
       <h1 id="text_hadiah" class="text-left"></h1>
       <h1 class="js-announcement announcement"></h1>
-  
+
       <button class="lever button" id="cari_pemenang">
         MULAI
       </button>
@@ -51,14 +51,14 @@
         <img src="{{asset('img/ojk_icon.png')}}" width="100%" class="mt-5" alt="OJK">
       </div>
       <div class="col-6">
-        <img src="{{asset('img/lps_icon.png')}}" width="100%" alt="LPS"> 
+        <img src="{{asset('img/lps_icon.png')}}" width="100%" alt="LPS">
       </div>
     </div>
   </footer>
 @endsection
 @section('js')
 <script>
-$('#select2').select2(); 
+$('#select2').select2();
 $('#cari_pemenang').css("visibility","hidden");
 $('#save').css("visibility","hidden");
 $('#tolak').css("visibility","hidden");
@@ -97,7 +97,7 @@ $('#select2').on("change", function(){
         var data = JSON.parse(response);
         $('#no_undian_id').val(data.data.id);
 
-        var tMax = 2000,
+        var tMax = 14000,
         height = 700,
         speeds = [],
         r = [],
@@ -107,7 +107,7 @@ $('#select2').on("change", function(){
         sReading = reading.toString(),
         numberOutput = [],
         numberIsi = [],
-        
+
         start,
         reels = [
             ['1', '2', '3','4','5','6','7','8','9','0'],
@@ -234,7 +234,7 @@ $('#select2').on("change", function(){
     });
 
   })
-    
+
   })
   }
 })
