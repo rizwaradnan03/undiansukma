@@ -75,6 +75,9 @@ class HadiahController extends Controller
                 ['status' => '1']
             );
 
+            Undian::where('id','=',$no_undian_id)->update(['status' => '1']);
+            Undian::where('id','=',$no_undian_id)->update(['point' => '0']);
+
             $json_response['status'] = "Berhasil!";
             return json_encode($json_response);
         }
