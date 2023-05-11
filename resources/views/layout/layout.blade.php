@@ -36,7 +36,7 @@
             <a class="nav-link text-dark" href="{{url('/pemenang')}}">Pemenang Undian</a>
           </li>
           @if (Auth::user())
-              
+
           @else
           <li class="nav-item">
             <a class="nav-link text-dark" href="{{url('/lokasi')}}">Lokasi Kami</a>
@@ -61,6 +61,17 @@
           <li class="nav-item">
             <a class="nav-link text-danger fw-bold" href="{{url('/setup')}}">Setup Hadiah</a>
           </li>
+          @endif
+          @if (Auth::user())
+          <div class="dropdown">
+            <a class="btn btn-secondary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Laporan
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="{{url('/laporanperolehan')}}">Laporan Perolehan</a></li>
+              <li><a class="dropdown-item" href="{{url('/laporanperbulan')}}">Laporan Perbulan</a></li>
+            </ul>
+          </div>
           @endif
         </ul>
           <li class="nav-item d-flex">
@@ -134,7 +145,7 @@
 <script src="{{asset('asset/js/bootstrap.min.js')}}"></script>
 <script src="{{asset('asset/js/jquery.min.js')}}"></script>
 <script src="{{asset('asset/select2/dist/js/select2.min.js')}}"></script>
-<script src="{{asset('asset/js/sweetalert.min.js')}}"></script> 
+<script src="{{asset('asset/js/sweetalert.min.js')}}"></script>
 <script src="{{asset('asset/datatables/DataTables-1.13.4/js/jquery.dataTables.js')}}"></script>
 @yield('js')
 </html>

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\HadiahController;
+use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PeriodeController;
 use App\Http\Controllers\SetupController;
@@ -44,6 +45,9 @@ Route::get('/pemenang', [HadiahController::class, 'halaman_pemenang']);
 Route::controller(['Auth'])->group(function () {
     Route::get('/listperiode', [PeriodeController::class, 'listperiode']);
     Route::post('/updateperiode', [PeriodeController::class, 'updateperiode']);
+    Route::get('/laporanperolehan', [LaporanController::class, 'laporanperolehan']);
+    Route::get('/laporanperbulan', [LaporanController::class, 'laporanperbulan']);
+    Route::get('/getPerolehan', [LaporanController::class, 'getPerolehan']);
     Route::resource('undian',HadiahController::class);
     Route::resource('setup',SetupController::class);
     Route::resource('periode',PeriodeController::class);
