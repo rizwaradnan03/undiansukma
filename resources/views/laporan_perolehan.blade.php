@@ -22,7 +22,10 @@
 @endsection
 @section('js')
     <script>
-        $('#datatables').DataTable();
+        $('#datatables').DataTable({
+            dom: 'Bfrtip',
+            buttons: ['excel']
+        });
         $('#datepicker').on("change", function(){
             let date = new Date($('#datepicker').val())
             let month = String(date.getMonth() + 1).padStart(2, '0')
