@@ -19,7 +19,7 @@ class SetupController extends Controller
         if(Auth::check()){
             $title = "Setup Hadiah";
             $data = Sistem::all();
-            
+
             return view('setup',compact('title','data'));
         }else{
             return back()->with('haruslogin', 'Anda harus Login!');
@@ -40,11 +40,12 @@ class SetupController extends Controller
     public function store(Request $request)
     {
         $setup = new Setup();
-        
+
         $setup->nama = $request->nama;
         $setup->periode_id = $request->periode_id;
         $setup->jumlah = $request->jumlah;
         $setup->jumlah_display = $request->jumlah;
+        $setup->gambar = $request->gambar;
         $setup->save();
 
         return back()->with('sukses_tambah','Berhasil Menambahkan Data!');

@@ -21,6 +21,10 @@
                 <label for="input_jumlah" class="form-label">Jumlah Hadiah</label>
                 <input type="number" name="jumlah" class="form-control" id="input_jumlah" required>
             </div>
+            <div class="mb-3">
+                <label for="input_jumlah" class="form-label">Gambar (URL)</label>
+                <input type="text" class="form-control" name="gambar" id="input_gambar" required>
+            </div>
             <div class="mb-5">
                 <label for="periode" class="form-label">Periode</label>
                 <select name="periode_id" class="form-control" id="periode" required>

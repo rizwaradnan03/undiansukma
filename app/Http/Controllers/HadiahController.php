@@ -91,6 +91,7 @@ class HadiahController extends Controller
 
             $response_data['data'] = $cari_pemenang;
             $response_data['pemenang'] = $tampil_pemenang;
+
             return json_encode($response_data);
         }
     }
@@ -103,6 +104,18 @@ class HadiahController extends Controller
             return json_encode($json_response);
         }else{
             return redirect('/');
+        }
+    }
+
+    public function index_undian(string $id)
+    {
+        if(Auth::check()){
+            $title = "Undian";
+            $periode = Sistem::where('status','=','0')->first();
+            $data = Setup::where('id','=',$id)->first();
+            return view('undian',compact('data','title','periode'));
+        }else{
+            return back()->with('haruslogin', 'Anda harus Login!');
         }
     }
 
@@ -158,6 +171,7 @@ class HadiahController extends Controller
         $save_data->periode_id = $request->periode_id;
         $save_data->jumlah = $request->jumlah;
         $save_data->jumlah_display = $request->jumlah;
+        $save_data->gambar = $request->gambar;
         $save_data->save();
         return redirect('/hadiah')->with('berhasil_update','Data Berhasil Diubah!');
     }

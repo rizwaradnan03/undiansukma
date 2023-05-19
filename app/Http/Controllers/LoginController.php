@@ -15,8 +15,8 @@ class LoginController extends Controller
         // dd(Auth::attempt($credentials));
         if(Auth::attempt($credentials)){
             $request->session()->regenerate();
- 
-            return redirect()->intended('/undian')->with('berhasil','Berhasil Login!');
+
+            return redirect()->intended('/pilih-hadiah-undian')->with('berhasil','Berhasil Login!');
         }
         return back()->with('gagal', 'Email / Password tidak valid!');
     }

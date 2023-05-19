@@ -14,6 +14,7 @@ class Setup extends Model
         'status',
         'jumlah_display',
         'jumlah',
+        'gambar',
     ];
     use HasFactory;
 }

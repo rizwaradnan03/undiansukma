@@ -13,13 +13,7 @@
 
   <div class="machine">
     <div class="slot-machine">
-      <h1>PENGUNDIAN</h1>
-      <select name="hadiah_id" id="select2" class="form-control">
-        <option value="0" selected>Pilih Hadiah</option>
-        @foreach ($data as $d)
-          <option value="{{$d->id}}">{{$d->nama}} ({{$d->jumlah}})</option>
-        @endforeach
-      </select>
+      <h1>PENGUNDIAN {{$data->nama}}</h1>
       <div class="group">
         <div class="reel"><img src="{{asset('img/sukma_icon_leaflet.png')}}" width="80px" class="img_center"></div>
         <div class="reel"><img src="{{asset('img/sukma_icon_leaflet.png')}}" width="80px" class="img_center"></div>
@@ -31,7 +25,6 @@
       <h1 id="text_selamat" class="text-center"></h1>
       <h1 id="text_nama" class="text-left"></h1>
       <h1 id="text_noacc" class="text-left"></h1>
-      <h1 id="text_hadiah" class="text-left"></h1>
       <h1 class="js-announcement announcement"></h1>
 
       <button class="lever button" id="cari_pemenang">
@@ -39,10 +32,21 @@
       </button>
       <input type="hidden" name="_token" id="token" value="{{ csrf_token() }}">
       <input type="hidden" name="no_undian_id" id="no_undian_id">
-      <input type="hidden" name="hadiah_id" id="hadiah_id">
+      <input type="hidden" name="hadiah_id" id="hadiah_id" value="{{$data->id}}">
       <input type="hidden" name="periode_id" id="periode_id" value="{{$periode['id']}}">
-      <a class="button2 btn" id="save">SAH</a>
-      <a class="button3 btn" id="tolak">TIDAK SAH</a>
+      <div class="row">
+        <div class="col-6">
+            <a class="button2 btn" id="save">SAH</a>
+        </div>
+        <div class="col-6">
+            <a class="button3 btn" id="tolak">TIDAK SAH</a>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+            <a class="button3 btn" id="stop">STOP</a>
+        </div>
+      </div>
   </div>
   </div>
   <footer class="footer mt-auto py-3">
@@ -59,37 +63,14 @@
 @section('js')
 <script>
 $('#select2').select2();
-$('#cari_pemenang').css("visibility","hidden");
 $('#save').css("visibility","hidden");
 $('#tolak').css("visibility","hidden");
+$('#stop').css("visibility","hidden");
 
-$('#select2').on("change", function(){
-  $('#cari_pemenang').css("visibility","visible");
-  var hadiah_id = $('#select2').val();
-  if(hadiah_id == 0){
-    Swal.fire({
-      title: 'Hadiah tidak sah!',
-      icon: 'error',
-      confirmButtonColor: '#3085d6',
-      confirmButtonText: 'Ok',
-    }).then((result) => {
-      if (result.isConfirmed) {
-          location.reload();
-      }else{
-          location.reload();
-      }
-    });
-  }else{
-    $.ajax({
-      url: "{{url('/getHadiah')}}",
-      data: {hadiah_id:hadiah_id},
-      type: 'GET'
-    }).done(function(response){
-      var data = JSON.parse(response);
-      $('#hadiah_id').val(data.hadiah_id);
-
-    $('#cari_pemenang').on("click", function(){
-      $('.img_center').hide();
+$('#cari_pemenang').on("click", function(){
+    $('#cari_pemenang').remove()
+    $('#stop').css("visibility","");
+    $('.img_center').hide();
       $.ajax({
         url: "{{url('/getPemenang')}}",
         type: 'GET'
@@ -97,7 +78,7 @@ $('#select2').on("change", function(){
         var data = JSON.parse(response);
         $('#no_undian_id').val(data.data.id);
 
-        var tMax = 14000,
+        var tMax = 10000000,
         height = 700,
         speeds = [],
         r = [],
@@ -128,7 +109,7 @@ $('#select2').on("change", function(){
         action();
     }
 
-    function action(){
+     function action(){
       $('#cari_pemenang').remove();
       $('#select2').attr("disabled","");
         if (start !== undefined) return;
@@ -155,7 +136,13 @@ $('#select2').on("change", function(){
         animate();
     }
 
-    function animate(now){
+    $('#stop').on("click", function(){
+      $('#stop').remove()
+      tMax = 1000;
+      start = undefined;
+    })
+
+     function animate(now){
         if (!start) start = now;
         var t = now - start || 0;
 
@@ -163,9 +150,9 @@ $('#select2').on("change", function(){
             $reels[i].scrollTop = (speeds[i] / tMax / 2 * (tMax - t) * (tMax - t) + numberIsi[i]) % height | 0;
         if (t < tMax) {
             requestAnimationFrame(animate);
-        } else {
-            start = undefined;
-            check();
+        }else{
+          start = undefined;
+          check();
         }
     }
 
@@ -185,7 +172,6 @@ $('#select2').on("change", function(){
         $('#text_selamat').html("SELAMAT KEPADA");
         $('#text_nama').html(data.pemenang.nama_lengkap);
         $('#text_noacc').html("Nomor Rekening : " + data.pemenang.noacc);
-        $('#text_hadiah').html("Memenangkan Hadiah : " + $('#select2 option:selected').html())
         var audio = new Audio('tepuk_tangan.mp3')
         audio.play();
     }
@@ -234,10 +220,5 @@ $('#select2').on("change", function(){
     });
 
   })
-
-  })
-  }
-})
-
 </script>
 @endsection

@@ -52,7 +52,7 @@
           @endif
           @if (Auth::user())
           <li class="nav-item">
-            <a class="nav-link text-danger fw-bold" href="{{url('/undian')}}">Undi</a>
+            <a class="nav-link text-danger fw-bold" href="{{url('/pilih-hadiah-undian')}}">Undi</a>
           </li>
           @endif
           @if (Auth::user())

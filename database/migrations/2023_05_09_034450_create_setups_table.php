@@ -21,6 +21,7 @@ return new class extends Migration
             $table->enum('status',['0','1'])->default('0');
             $table->integer('jumlah');
             $table->string('jumlah_display');
+            $table->text('gambar');
             $table->timestamps();
         });
     }
