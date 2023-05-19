@@ -42,7 +42,17 @@ class LaporanController extends Controller
                 ->whereYear('created_at', $year)
                 ->groupBy('nama_lengkap')
                 ->get();
-            return json_encode($results);
+
+            if(sizeof($results) != 0){
+                $response_data['status'] = 'berhasil';
+                $response_data['data'] = $results;
+            }else if(sizeof($results) == 0){
+                $response_data['status'] = 'gagal';
+            }else{
+                $response_data['status'] = "";
+            }
+
+            return json_encode($response_data);
         }else{
             return redirect('/');
         }

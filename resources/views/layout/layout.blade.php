@@ -11,6 +11,8 @@
     <link rel="stylesheet" href="{{asset('asset/css/bootstrap.min.css')}}">
     <link rel="stylesheet" href="{{asset('asset/datatables/DataTables-1.13.4/css/jquery.dataTables.css')}}" />
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.3.6/css/buttons.dataTables.min.css">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+    {{-- <link rel="stylesheet" href="/resources/demos/style.css"> --}}
     <style>
       *{
         font-family: sans-serif;
@@ -145,6 +147,7 @@
 <script src="{{asset('asset/js/popper.min.js')}}"></script>
 <script src="{{asset('asset/js/bootstrap.min.js')}}"></script>
 <script src="{{asset('asset/js/jquery.min.js')}}"></script>
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
 <script src="{{asset('asset/select2/dist/js/select2.min.js')}}"></script>
 <script src="{{asset('asset/js/sweetalert.min.js')}}"></script>
 <script src="{{asset('asset/datatables/DataTables-1.13.4/js/jquery.dataTables.js')}}"></script>

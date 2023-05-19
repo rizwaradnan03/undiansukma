@@ -1,8 +1,26 @@
 @extends('layout.layout')
 @section('content')
     <div class="row mt-5">
-        <div class="lg-12 col-12 mb-3">
-            <input type="date" id="datepicker" class="form-control" placeholder="Pilih Bulan">
+        <div class="row mb-4">
+            <div class="col-6">
+                <select id="month" class="form-control">
+                    <option value="01">Januari</option>
+                    <option value="02">Februari</option>
+                    <option value="03">Maret</option>
+                    <option value="04">April</option>
+                    <option value="05">Mei</option>
+                    <option value="06">Juni</option>
+                    <option value="07">Juli</option>
+                    <option value="08">Agustus</option>
+                    <option value="09">September</option>
+                    <option value="10">Oktober</option>
+                    <option value="11">November</option>
+                    <option value="12">Desember</option>
+                </select>
+            </div>
+            <div class="col-6">
+                <select id="year" class="form-control"></select>
+            </div>
         </div>
         <div class="table">
             <table id="datatables" class="table">
@@ -22,41 +40,61 @@
 @endsection
 @section('js')
     <script>
+       $("#datepicker").datepicker({
+        dateFormat: "yy-mm",
+        changeMonth: true,
+        changeYear: true,
+        showButtonPanel: true,
+        onClose: function(dateText, inst) {
+            var year = $("#ui-datepicker-div .ui-datepicker-year :selected").val();
+            var month = $("#ui-datepicker-div .ui-datepicker-month :selected").val();
+            $(this).datepicker('setDate', new Date(year, month, 1));
+        }
+    });
         $('#datatables').DataTable({
             dom: 'Bfrtip',
             buttons: ['excel']
         });
-        $('#datepicker').on("change", function(){
-            let date = new Date($('#datepicker').val())
-            let month = String(date.getMonth() + 1).padStart(2, '0')
-            let year = date.getFullYear();
 
-            $.ajax({
+        $('#month').on("change", function(){
+            let month = $('#month').val();
+
+            let html = ""
+                html += "<option disabled selected>--Pilih Tahun--</option>"
+                for(let i = 2020;i <= 2050;i++){
+                    html += "<option value="+i+">"+i+"</option>"
+                }
+            $('#year').html(html)
+
+            $('#year').on("change", function(){
+                let year = $('#year').val()
+                $.ajax({
                 url: "{{url('/getPerolehan')}}",
                 data: {month: month, year: year},
                 type: "GET",
             }).done(function(reponse){
                 let data = JSON.parse(reponse);
+
                 let table = "";
                 let no = 0;
-                if(data != null){
+                if(data.status == "berhasil"){
                     for(let i = 0;i < data.length;i++){
                         table += "<tr>"
                             table += "<td>"+ ++no; +"</td>"
-                            table += "<td>"+ data[i].nama_lengkap +"</td>"
-                            table += "<td>"+ data[i].jumlah +"</td>"
+                            table += "<td>"+ data.data[i].nama_lengkap +"</td>"
+                            table += "<td>"+ data.data[i].jumlah +"</td>"
                         table += "</tr>"
                     }
-                }else if(data == null){
-                    table += "<tr>"
-                        table += "<td>0</td>"
-                        table += "<td>Undefined</td>"
-                        table += "<td>Undefined</td>"
-                    table += "</tr>"
+                }else if(data.status == "gagal"){
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Data Tidak Ditemukan!',
+                    })
+                    location.reload()
                 }
                 $('#table').html(table)
             })
+            })
         })
-
     </script>
 @endsection
