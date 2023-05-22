@@ -113,7 +113,12 @@ class HadiahController extends Controller
             $title = "Undian";
             $periode = Sistem::where('status','=','0')->first();
             $data = Setup::where('id','=',$id)->first();
-            return view('undian',compact('data','title','periode'));
+
+            if($data != null){
+                return view('undian',compact('data','title','periode'));
+            }else{
+                return redirect('/pilih-hadiah-undian');
+            }
         }else{
             return back()->with('haruslogin', 'Anda harus Login!');
         }

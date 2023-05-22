@@ -1,5 +1,13 @@
 @extends('layout.layout')
 @section('content')
+@section('css')
+    <style>
+        .custom-button {
+            background-color: green;
+            color: white;
+        }
+    </style>
+@endsection
     <div class="row mt-5">
         <div class="row mb-4">
             <div class="col-6">
@@ -51,14 +59,10 @@
             $(this).datepicker('setDate', new Date(year, month, 1));
         }
     });
-        $('#datatables').DataTable({
-            dom: 'Bfrtip',
-            buttons: ['excel']
-        });
 
         $('#month').on("change", function(){
             let month = $('#month').val();
-
+            $('#month').attr("disabled","disabled")
             let html = ""
                 html += "<option disabled selected>--Pilih Tahun--</option>"
                 for(let i = 2020;i <= 2050;i++){
@@ -68,33 +72,44 @@
 
             $('#year').on("change", function(){
                 let year = $('#year').val()
+                $('#year').attr("disabled","disabled")
                 $.ajax({
-                url: "{{url('/getPerolehan')}}",
-                data: {month: month, year: year},
-                type: "GET",
-            }).done(function(reponse){
-                let data = JSON.parse(reponse);
+                    url: "{{url('/getPerolehan')}}",
+                    data: {month: month, year: year},
+                    type: "GET",
+                }).done(function(reponse){
+                    let data = JSON.parse(reponse);
 
-                let table = "";
-                let no = 0;
-                if(data.status == "berhasil"){
-                    for(let i = 0;i < data.length;i++){
-                        table += "<tr>"
-                            table += "<td>"+ ++no; +"</td>"
-                            table += "<td>"+ data.data[i].nama_lengkap +"</td>"
-                            table += "<td>"+ data.data[i].jumlah +"</td>"
-                        table += "</tr>"
+                    let table = "";
+                    let no = 0;
+                    if(data.status == "berhasil"){
+                        for(let i = 0;i < data.data.length;i++){
+                            table += "<tr>"
+                                table += "<td>"+ ++no; +"</td>"
+                                table += "<td>"+ data.data[i].nama_lengkap +"</td>"
+                                table += "<td>"+ data.data[i].jumlah +"</td>"
+                            table += "</tr>"
+                        }
+                    $('#table').html(table)
+                    $('#datatables').DataTable({
+                        dom: 'Bfrtip',
+                        buttons: [{
+                            extend: 'excel',
+                            text: '<h4 style="font-size: 13px;">New</h4>',
+                            titleAttr: 'Export To Excel',
+                            className: 'custom-button'
+                        },],
+
+                    });
+                    }else if(data.status == "gagal"){
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Data Tidak Ditemukan!',
+                        })
+                        location.reload()
                     }
-                }else if(data.status == "gagal"){
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Data Tidak Ditemukan!',
-                    })
-                    location.reload()
-                }
-                $('#table').html(table)
+                })
+                })
             })
-            })
-        })
     </script>
 @endsection

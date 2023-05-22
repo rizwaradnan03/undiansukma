@@ -16,9 +16,9 @@
 
             let html = ""
             for(let i = 0;i < data.data.length;i++){
-                html += "<div class='col-md-4 mb-5'>"
+                html += "<div class='col-md-4 mb-5 h-50'>"
                     html += "<div class='card'>"
-                        html += "<img src="+data.data[i].gambar+" class='card-img-top' alt='Gambar'>"
+                        html += "<img src="+data.data[i].gambar+" class='card-img-top h-auto' alt='Gambar'>"
                         html += "<div class='card-body'>"
                             html += "<h5 class='card-title'>"+ data.data[i].nama +"</h5>"
                             html += '<a href="{{url('/undian-id/')}}/'+data.data[i].id+'" class="btn btn-primary form-control">Undi ('+data.data[i].jumlah +')</a>'
