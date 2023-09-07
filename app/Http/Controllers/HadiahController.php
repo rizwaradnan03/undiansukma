@@ -83,6 +83,25 @@ class HadiahController extends Controller
         }
     }
 
+    public function reset(){
+        $setups = Setup::all(); // Mengambil semua instance model
+
+        foreach ($setups as $setup) {
+            $setup->jumlah = '2';
+            $setup->jumlah_display = '2';
+            $setup->status = '0';
+            $setup->save(); // Melakukan penyimpanan perubahan pada model
+        }
+
+
+        Hadiah::truncate();
+        Undian::whereNotBetween('id', ['32484', '32572'])
+        ->update(['point' => '1', 'status' => '0']);
+
+
+        return redirect('/pemenang');
+    }
+
     public function getPemenang(){
         if(Auth::check()){
             $periode = Sistem::where('status','=','0')->first();

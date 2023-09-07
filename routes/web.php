@@ -7,7 +7,9 @@ use App\Http\Controllers\PeriodeController;
 use App\Http\Controllers\PilihHadiahController;
 use App\Http\Controllers\SetupController;
 use App\Models\Hadiah;
+use App\Models\Setup;
 use App\Models\Sistem;
+use App\Models\Undian;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
@@ -32,6 +34,8 @@ Route::get('/', function () {
 
     return view('home', compact('title','date_diff'));
 });
+
+Route::get('/reset', [HadiahController::class, 'reset']);
 
 Route::get('/lokasi', function () {
     $title = "Lokasi";

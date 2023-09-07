@@ -72,7 +72,7 @@
             </a>
             <ul class="dropdown-menu">
               <li><a class="dropdown-item" href="{{url('/laporanperolehan')}}">Laporan Perolehan</a></li>
-              <li><a class="dropdown-item" href="{{url('/laporanperbulan')}}">Laporan Perbulan</a></li>
+              <li><a class="dropdown-item" href="{{url('/laporanperbulan')}}">Laporan Total Point</a></li>
             </ul>
           </div>
           @endif

@@ -30,6 +30,7 @@
 </div> --}}
 <br><br>
 <h1 class="text-center">DATA PEMENANG ({{$data_judul->nama_periode}})</h1>
+<a id="btn-reset" class="btn btn-danger">Reset</a>
 <hr>
 <table class="table" id="datatables">
     <thead class="thead-dark">
@@ -63,6 +64,40 @@
 @endsection
 @section('js')
     <script>
-      $('#datatables').DataTable();
+      $('#datatables').DataTable({
+        dom: 'Bfrtip',
+        buttons: [{
+          extend: 'excel',
+          text: '<h4 style="font-size: 13px;">Export Excel</h4>',
+          titleAttr: 'Export To Excel',
+          className: 'custom-button'
+        },],
+      });
+
+        $('#btn-reset').on("click", function(){
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: "{{url('/reset')}}",
+                        type: "GET",
+                    }).done(function () {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Your work has been saved',
+                            showConfirmButton: false
+                        })
+                        setTimeout(function(){ location.reload(); }, 2000);
+                    })
+                }
+                })
+        })
     </script>
 @endsection

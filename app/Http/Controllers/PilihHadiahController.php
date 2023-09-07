@@ -17,7 +17,7 @@ class PilihHadiahController extends Controller
     }
 
     public function pilihhadiahundian_ajax(){
-        $data = DB::connection('mysql')->select("select setups.* from setups inner join sistems on setups.periode_id = sistems.id where sistems.status = '0'");
+        $data = DB::connection('mysql')->select("select setups.* from setups inner join sistems on setups.periode_id = sistems.id where sistems.status = '0' AND setups.jumlah > 0");
         $response_data['data'] = $data;
 
         return json_encode($response_data);

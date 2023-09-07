@@ -6,16 +6,18 @@
                 <thead>
                     <tr>
                         <th>No</th>
-                        <th>Bulan</th>
-                        <th>Jumlah</th>
+                        <th>No Rekening</th>
+                        <th>Nama</th>
+                        <th>Point</th>
                     </tr>
                     <tbody>
                         <?php $no = 0; ?>
                         @foreach ($data as $d)
                         <tr>
                             <td>{{++$no}}</td>
-                            <td>{{$d->date}}</td>
-                            <td>{{$d->jumlah}}</td>
+                            <td>{{$d->norekening}}</td>
+                            <td>{{$d->namalengkap}}</td>
+                            <td>{{intval($d->point)}}</td>
                         </tr>
                         @endforeach
                     </tbody>

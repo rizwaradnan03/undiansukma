@@ -21,6 +21,8 @@
         <div class="reel"><img src="{{asset('img/sukma_icon_leaflet.png')}}" width="80px" class="img_center"></div>
         <div class="reel"><img src="{{asset('img/sukma_icon_leaflet.png')}}" width="80px" class="img_center"></div>
         <div class="reel"><img src="{{asset('img/sukma_icon_leaflet.png')}}" width="80px" class="img_center"></div>
+        <div class="reel"><img src="{{asset('img/sukma_icon_leaflet.png')}}" width="80px" class="img_center"></div>
+        <div class="reel"><img src="{{asset('img/sukma_icon_leaflet.png')}}" width="80px" class="img_center"></div>
       </div><br>
       <h1 id="text_selamat" class="text-center"></h1>
       <h1 id="text_nama" class="text-left"></h1>
@@ -83,7 +85,7 @@ $('#cari_pemenang').on("click", function(){
         speeds = [],
         r = [],
         target = data.data.no_undian,
-        reading = 123456,
+        reading = 12345678,
         sTarget = target.toString(),
         sReading = reading.toString(),
         numberOutput = [],
@@ -91,6 +93,8 @@ $('#cari_pemenang').on("click", function(){
 
         start,
         reels = [
+            ['1', '2', '3','4','5','6','7','8','9','0'],
+            ['1', '2', '3','4','5','6','7','8','9','0'],
             ['1', '2', '3','4','5','6','7','8','9','0'],
             ['1', '2', '3','4','5','6','7','8','9','0'],
             ['1', '2', '3','4','5','6','7','8','9','0'],
@@ -129,7 +133,7 @@ $('#cari_pemenang').on("click", function(){
               numberIsi[i] = 630;
             }
         }
-        for (var j = 0; j < 6; ++j) {
+        for (var j = 0; j < 8; ++j) {
             speeds[j] = Math.random() + .7;
             r[j] = (Math.random() * 10 || 0) * height / 10;
         }
@@ -146,7 +150,7 @@ $('#cari_pemenang').on("click", function(){
         if (!start) start = now;
         var t = now - start || 0;
 
-        for (var i = 0; i < 6; ++i)
+        for (var i = 0; i < 8; ++i)
             $reels[i].scrollTop = (speeds[i] / tMax / 2 * (tMax - t) * (tMax - t) + numberIsi[i]) % height | 0;
         if (t < tMax) {
             requestAnimationFrame(animate);

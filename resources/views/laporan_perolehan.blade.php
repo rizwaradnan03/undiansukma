@@ -12,6 +12,8 @@
         <div class="row mb-4">
             <div class="col-6">
                 <select id="month" class="form-control">
+                    <option value="#" selected disabled>--Pilih Bulan--</option>
+                    <option value="all">Gabungan</option>
                     <option value="01">Januari</option>
                     <option value="02">Februari</option>
                     <option value="03">Maret</option>
@@ -27,7 +29,9 @@
                 </select>
             </div>
             <div class="col-6">
-                <select id="year" class="form-control"></select>
+                <select id="year" class="form-control">
+                    <option value="#" disabled selected>--Silahkan Pilih Bulan--</option>
+                </select>
             </div>
         </div>
         <div class="table">
@@ -35,8 +39,10 @@
                 <thead>
                     <tr>
                         <th>No</th>
+                        <th>No Rekening</th>
                         <th>Nama</th>
-                        <th>Jumlah</th>
+                        <th>Saldo</th>
+                        <th>Point</th>
                     </tr>
                     <tbody id="table">
 
@@ -86,8 +92,10 @@
                         for(let i = 0;i < data.data.length;i++){
                             table += "<tr>"
                                 table += "<td>"+ ++no; +"</td>"
-                                table += "<td>"+ data.data[i].nama_lengkap +"</td>"
-                                table += "<td>"+ data.data[i].jumlah +"</td>"
+                                table += "<td>"+ data.data[i].noacc +"</td>"
+                                table += "<td>"+ data.data[i].namaidentitas +"</td>"
+                                table += "<td>Rp"+ new Intl.NumberFormat('en-US').format(data.data[i].saldo) +"</td>"
+                                table += "<td>"+ data.data[i].point +"</td>"
                             table += "</tr>"
                         }
                     $('#table').html(table)
@@ -95,7 +103,7 @@
                         dom: 'Bfrtip',
                         buttons: [{
                             extend: 'excel',
-                            text: '<h4 style="font-size: 13px;">New</h4>',
+                            text: '<h4 style="font-size: 13px;">Export Excel</h4>',
                             titleAttr: 'Export To Excel',
                             className: 'custom-button'
                         },],
@@ -105,8 +113,14 @@
                         Swal.fire({
                             icon: 'error',
                             title: 'Data Tidak Ditemukan!',
+                            confirmButtonText: 'Ok',
+                        }).then((result) => {
+                            if(result.isConfirmed){
+                                location.reload(true)
+                            }else{
+                                location.reload(true)
+                            }
                         })
-                        location.reload()
                     }
                 })
                 })

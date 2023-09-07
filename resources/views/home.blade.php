@@ -1,7 +1,7 @@
 @extends('layout.layout')
 @section('content')
 <div class="row">
-  <div class="col-9">
+  <div class="col-lg-9">
     <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
       <div class="carousel-indicators">
         <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
@@ -29,7 +29,7 @@
       </button>
     </div>
   </div>
-  <div class="col-3 card shadow-lg px-3 mb-5 bg-body rounded">
+  <div class="col-lg-3 card shadow-lg px-3 mb-5 bg-body rounded">
     <div class="row d-flex justify-content-center">
       <div class="col-1 rounded-circle border border-3 border-dark bg-light text-light mx-1">
         .
@@ -55,7 +55,7 @@
       <div class="col-1 rounded-circle border border-3 border-dark bg-light text-light mx-1">
         .
       </div>
-      
+
     </div>
     <h1 style="font-size: 150px" class="text-center text-danger">{{$date_diff->days}}</h1>
     <h1 class="text-center">HARI LAGI!</h1>
@@ -63,23 +63,17 @@
     <h3 class="text-center">TERUS TINGKATKAN SALDO ANDA!!!</h3>
   </div>
 </div>
-  {{-- <p id="count" hidden>{{$data}}</p> --}}
-  <br>
-  <div class="row">
-    {{-- <div class="col-6">
-      <figure class="highcharts-figure">
-          <div id="highcharts1"></div>
-      </figure> 
-    </div> --}}
-    <div class="col-12">
-        <h1>APA ITU TABUNGAN SUKMA BERHADIAH?</h1>
-        <hr>
-        <p class="h5">Tabungan Berhadiah adalah produk BPR dalam bentuk tabungan dengan imbalan jasa berupa hadiah yang diundi. Penabung berhak atas suatu hadiah, yang diundi melalui mekanisme undian pada setiap periode atas nomor rekening, yang dihitung berdasarkan SRT (Saldo Rata-rata Bulanan) dari nilai tabungannya. BPR menyediakan hadiah-hadiah menarik yang dapat dibawa pulang.</p>
-    </div>
+<br>
+<div class="row">
+  <div class="col-lg-6 offset-lg-3">
+    <h1>APA ITU TABUNGAN SUKMA BERHADIAH?</h1>
+    <hr>
+    <p class="h5">Tabungan Berhadiah adalah produk BPR dalam bentuk tabungan dengan imbalan jasa berupa hadiah yang diundi. Penabung berhak atas suatu hadiah, yang diundi melalui mekanisme undian pada setiap periode atas nomor rekening, yang dihitung berdasarkan SRT (Saldo Rata-rata Bulanan) dari nilai tabungannya. BPR menyediakan hadiah-hadiah menarik yang dapat dibawa pulang.</p>
   </div>
+</div>
 @endsection
 @section('js')
-    <script>
-      
-    </script>
+<script>
+
+</script>
 @endsection
